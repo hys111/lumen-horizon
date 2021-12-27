@@ -1,5 +1,5 @@
 {
-    "name": "lumen/horizon",
+    "name": "laravel-lumen/horizon",
     "description": "Dashboard and code-driven configuration for Laravel-lumen queues.",
     "keywords": [
         "laravel",
