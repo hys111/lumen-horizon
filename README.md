@@ -29,14 +29,14 @@ $app->configure('app');
 2. Run composer to add the dependency.
 
 ```bash
-    composer require kingdarkness/lumen-horizon
+    composer require laravel-lumen/horizon
 ```
 
 3. Publish config
    add the `horizon.php` to config/horizon
 
 ```bash
-    cp vendor/kingdarkness/horizon-lumen/config/horizon.php config/horizon.php
+    cp vendor/horizon-lumen/config/horizon.php config/horizon.php
 ```
 
 4. register provider in your `bootstrap/app.php`
