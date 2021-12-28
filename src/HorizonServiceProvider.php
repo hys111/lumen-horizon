@@ -2,6 +2,7 @@
 
 namespace Laravel\Horizon;
 
+use Laravel\Horizon\Mix;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\Facades\Route;
