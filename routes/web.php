@@ -41,6 +41,7 @@ Route::group(['prefix' => 'api'], function () {
 });
 // Catch-all Route...
 // Route::get('/{view?}', 'HomeController@index')->where('view', '(.*)')->name('horizon.index');
+Route::get('/', 'HomeController@index');
 Route::get('/dashboard', 'HomeController@index');
 
 Route::get('/monitoring', 'HomeController@index');
