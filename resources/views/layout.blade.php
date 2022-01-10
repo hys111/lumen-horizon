@@ -4,6 +4,7 @@
     <!-- Meta Information -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="">
     <link rel="shortcut icon" href="{{ asset('/vendor/horizon/img/favicon.png') }}">
 
     <title>Horizon{{ config('app.name') ? ' - ' . config('app.name') : '' }}</title>
