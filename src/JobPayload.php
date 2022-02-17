@@ -48,13 +48,10 @@ class JobPayload implements ArrayAccess
     public function id()
     {
         if (empty($this->decoded['uuid']) && empty($this->decoded['id'])) {
-            Log::error('JobPayload', [
-                'decoded' => $this->decoded,
-                'value' => $this->value,
-            ]);
+            throw new \Exception('jobPayload 异常');
         }
-        return $this->decoded['uuid'] ?? $this->decoded['id'] ?? 'debug_' . Str::random(14) . '_' . time();//
-//        return $this->decoded['uuid'] ?? $this->decoded['id'];
+
+        return $this->decoded['uuid'] ?? $this->decoded['id'];
     }
 
     /**
