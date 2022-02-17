@@ -97,6 +97,36 @@ class RedisWorkloadRepository implements WorkloadRepository
     }
 
     /**
+     * Get the current workload of each queue.
+     *
+     * @return array
+     */
+    public function customGet()
+    {
+        $config = config('horizon.environments');
+        $env = config('app.env');
+        $connection = 'redis';
+        $queueConfig = $config[$env] ?? [];
+        $result = [];
+        foreach ($queueConfig as $key => $value) {
+            $queue = $value['queue'];
+            $length = collect($queue)->mapWithKeys(function ($queueName) use ($connection) {
+                return [$queueName => $this->queue->connection($connection)->readyNow($queueName)];
+            });
+
+            $result[] = [
+                'name' => $key,
+                'length' => $length->sum(),
+                'wait' => 0,
+                'processes' => 0,
+                'split_queues' => null,
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
      * Get the number of processes of each queue.
      *
      * @return array

@@ -14,6 +14,6 @@ class WorkloadController extends Controller
      */
     public function index(WorkloadRepository $workload)
     {
-        return collect($workload->get())->sortBy('name')->values()->toArray();
+        return collect($workload->customGet())->sortBy('name')->values()->toArray();
     }
 }

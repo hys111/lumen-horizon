@@ -8,6 +8,8 @@ use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class JobPayload implements ArrayAccess
 {
@@ -45,7 +47,14 @@ class JobPayload implements ArrayAccess
      */
     public function id()
     {
-        return $this->decoded['uuid'] ?? $this->decoded['id'];
+        if (empty($this->decoded['uuid']) && empty($this->decoded['id'])) {
+            Log::error('JobPayload', [
+                'decoded' => $this->decoded,
+                'value' => $this->value,
+            ]);
+        }
+        return $this->decoded['uuid'] ?? $this->decoded['id'] ?? 'debug_' . Str::random(14) . '_' . time();//
+//        return $this->decoded['uuid'] ?? $this->decoded['id'];
     }
 
     /**
