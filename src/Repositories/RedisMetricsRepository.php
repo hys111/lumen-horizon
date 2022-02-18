@@ -153,7 +153,7 @@ class RedisMetricsRepository implements MetricsRepository
     public function queueWithMaximumRuntime()
     {
         return collect($this->measuredQueues())->sortBy(function ($queue) {
-            if ($snapshots = $this->connection()->zrange('snapshot:queue:'.$queue, -1, 1)) {
+            if ($snapshots = $this->connection()->zrange('snapshot:queue:'.$queue, 0, -1)) {
                 return json_decode((string) $snapshots[0])->runtime;
             }
         })->last();
@@ -167,7 +167,7 @@ class RedisMetricsRepository implements MetricsRepository
     public function queueWithMaximumThroughput()
     {
         return collect($this->measuredQueues())->sortBy(function ($queue) {
-            if ($snapshots = $this->connection()->zrange('snapshot:queue:'.$queue, -1, 1)) {
+            if ($snapshots = $this->connection()->zrange('snapshot:queue:'.$queue, 0, -1)) {
                 return json_decode((string) $snapshots[0])->throughput;
             }
         })->last();
