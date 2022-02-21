@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Redis\Factory as RedisFactory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Laravel\Horizon\Contracts\JobRepository;
 use Laravel\Horizon\JobPayload;
 use Laravel\Horizon\LuaScripts;
@@ -424,8 +425,17 @@ class RedisJobRepository implements JobRepository
     {
         $this->connection()->pipeline(function ($pipe) use ($payloads) {
             foreach ($payloads as $payload) {
+                $pid = $payload->id();
+                if (!$pid) {
+                    Log::error('jobPayload 异常记录', [
+                        'payloads' => $payloads,
+                        'updated_at' => str_replace(',', '.', microtime(true)),
+                    ]);
+                    continue;
+                }
+
                 $pipe->hmset(
-                    $payload->id(), [
+                    $pid, [
                         'status' => 'pending',
                         'payload' => $payload->value,
                         'updated_at' => str_replace(',', '.', microtime(true)),
@@ -433,6 +443,7 @@ class RedisJobRepository implements JobRepository
                 );
             }
         });
+
     }
 
     /**
