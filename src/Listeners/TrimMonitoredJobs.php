@@ -25,10 +25,9 @@ class TrimMonitoredJobs
     /**
      * Handle the event.
      *
-     * @param  \Laravel\Horizon\Events\MasterSupervisorLooped  $event
      * @return void
      */
-    public function handle(MasterSupervisorLooped $event)
+    public function handle()
     {
         if (! isset($this->lastTrimmed)) {
             $this->frequency = max(1, intdiv(

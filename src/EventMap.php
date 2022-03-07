@@ -67,5 +67,10 @@ trait EventMap
         Events\LongWaitDetected::class => [
             Listeners\SendNotification::class,
         ],
+        Events\Trim::class => [
+            Listeners\TrimRecentJobs::class,
+            Listeners\TrimFailedJobs::class,
+            Listeners\TrimMonitoredJobs::class,
+        ],
     ];
 }

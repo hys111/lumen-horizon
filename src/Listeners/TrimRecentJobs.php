@@ -25,10 +25,9 @@ class TrimRecentJobs
     /**
      * Handle the event.
      *
-     * @param  \Laravel\Horizon\Events\MasterSupervisorLooped  $event
      * @return void
      */
-    public function handle(MasterSupervisorLooped $event)
+    public function handle()
     {
         if (! isset($this->lastTrimmed)) {
             $this->lastTrimmed = CarbonImmutable::now()->subMinutes($this->frequency + 1);

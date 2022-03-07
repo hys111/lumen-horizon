@@ -4,6 +4,7 @@ namespace Laravel\Horizon\Console;
 
 use Illuminate\Console\Command;
 use Laravel\Horizon\Contracts\MetricsRepository;
+use Laravel\Horizon\Events\Trim;
 use Laravel\Horizon\Lock;
 
 class SnapshotCommand extends Command
@@ -33,6 +34,9 @@ class SnapshotCommand extends Command
     {
         if ($lock->get('metrics:snapshot', config('horizon.metrics.snapshot_lock', 300) - 30)) {
             $metrics->snapshot();
+
+            // 定时删除旧数据
+            event(new Trim());
 
             $this->info('Metrics snapshot stored successfully.');
         }
